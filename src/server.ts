@@ -2,7 +2,7 @@ import { execFile } from 'node:child_process';
 import { createServer, type IncomingMessage, type ServerResponse } from 'node:http';
 import { WebSocketServer, type WebSocket } from 'ws';
 import { ChatPool, log, type Chat, type ChatEvent } from './chat.ts';
-import { loadConfig, MODELS, type Model, type Profile } from './config.ts';
+import { loadConfig, MODEL_COMMAND, MODELS, type Model, type Profile } from './config.ts';
 import { Guard } from './guard.ts';
 import { AlexaHandler } from './alexa/handler.ts';
 import { AlexaVerifier } from './alexa/verify.ts';
@@ -25,8 +25,6 @@ import { AlexaVerifier } from './alexa/verify.ts';
 const cfg = loadConfig();
 const pool = new ChatPool(cfg);
 const guard = new Guard(cfg.profiles, cfg.turnsPerHour);
-
-const MODEL_COMMAND = /^\s*(?:please\s+)?(?:use|switch to|change to)\s+(haiku|sonnet|opus)\b[\s.!]*$/i;
 
 function json(res: ServerResponse, status: number, body: object): void {
   res.writeHead(status, { 'content-type': 'application/json', 'cache-control': 'no-store' });
@@ -58,7 +56,16 @@ function authStatus(): Promise<{ loggedIn: boolean; method: string }> {
 const ALEXA_BODY_LIMIT = 64 * 1024;
 const ALEXA_BAD_PER_MINUTE = 30;
 const alexaVerifier = new AlexaVerifier();
-const alexaHandler = cfg.alexa ? new AlexaHandler(cfg.alexa, (m) => log(null, m)) : null;
+const alexaCfg = cfg.alexa;
+const alexaHandler = alexaCfg
+  ? new AlexaHandler(alexaCfg, {
+      log: (m) => log(null, m),
+      createChat: () => pool.create(alexaCfg.profile, alexaCfg.model),
+      getChat: (id) => pool.get(id, alexaCfg.profile, alexaCfg.model),
+      makeRoom: (chat) => pool.makeRoomFor(chat as Chat),
+      takeTurn: () => guard.takeTurn(),
+    })
+  : null;
 /** unverified requests per IP in the current minute; past the limit they are dropped unread */
 const alexaBad = new Map<string, { count: number; since: number }>();
 
@@ -100,7 +107,7 @@ async function onAlexa(req: IncomingMessage, res: ServerResponse): Promise<void>
     const raw = await readBody(req, ALEXA_BODY_LIMIT);
     if (!raw) throw new Error('body too large');
     const body = await alexaVerifier.verify({ certUrl: header('signaturecertchainurl'), signature: header('signature-256'), body: raw });
-    const reply = alexaHandler!.handle(body, received);
+    const reply = await alexaHandler!.handle(body, received);
     if (reply.status !== 200) return refuse();
     json(res, 200, reply.body!);
   } catch (err) {

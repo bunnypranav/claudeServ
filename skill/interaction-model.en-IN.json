@@ -672,6 +672,10 @@
           "samples": []
         },
         {
+          "name": "AMAZON.NoIntent",
+          "samples": []
+        },
+        {
           "name": "AMAZON.NextIntent",
           "samples": []
         },

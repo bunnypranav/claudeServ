@@ -43,6 +43,10 @@ export class Chat {
   turnDone = true;
   /** turns accepted so far; lets a reconnecting watch tell whether its last message arrived */
   turnCount = 0;
+  /** how the latest turn failed, for a client that wasn't listening when it did (Alexa) */
+  turnError: Extract<ChatEvent, { type: 'error' }> | null = null;
+  /** latest status of the running turn ("Searching the web…") */
+  turnStatus = '';
 
   private cfg: Config;
   private proc: ChildProcessWithoutNullStreams | null = null;
@@ -87,6 +91,8 @@ export class Chat {
     this.busy = true;
     this.turnText = '';
     this.turnDone = false;
+    this.turnError = null;
+    this.turnStatus = '';
     this.cancelled = false;
     this.textBlocks = 0;
     this.turnStart = Date.now();
@@ -101,6 +107,7 @@ export class Chat {
     this.lastUsed = Date.now();
     this.turnText = text;
     this.turnDone = true;
+    this.turnError = null;
     this.emit({ type: 'start' });
     this.emit({ type: 'delta', text });
     this.emit({ type: 'done', ms: 0 });
@@ -110,6 +117,13 @@ export class Chat {
     if (!this.busy || !this.proc) return;
     this.cancelled = true;
     this.write({ type: 'control_request', request_id: `int-${++this.requestSeq}`, request: { subtype: 'interrupt' } });
+  }
+
+  /** Start the process ahead of the first message, so that message doesn't wait for it. */
+  warm(): void {
+    if (this.proc || this.busy) return;
+    this.spawn();
+    this.armIdle();
   }
 
   /** Takes effect on the next turn: the process restarts with --resume and the new model. */
@@ -281,6 +295,8 @@ export class Chat {
   }
 
   private emit(e: ChatEvent): void {
+    if (e.type === 'error' && e.kind !== 'busy') this.turnError = e;
+    else if (e.type === 'status') this.turnStatus = e.text;
     this.listener?.(e);
   }
 }
@@ -304,11 +320,11 @@ export class ChatPool {
    * Find one of `profile`'s chats in memory, or rebuild it from its transcript
    * after a relay restart. Another client's chat is reported as missing.
    */
-  get(id: string, profile: Profile): Chat | null {
+  get(id: string, profile: Profile, model: Model = this.cfg.defaultModel): Chat | null {
     const found = this.chats.get(id);
     if (found) return found.profile === profile ? found : null;
     if (!UUID.test(id) || !existsSync(this.transcriptPath(id, profile))) return null;
-    const chat = new Chat(this.cfg, profile, id, this.cfg.defaultModel, true);
+    const chat = new Chat(this.cfg, profile, id, model, true);
     this.chats.set(id, chat);
     return chat;
   }

@@ -15,7 +15,7 @@
     "continue", "go on", "keep going", "more", "tell me more", "carry on", "what's the answer", "are you done", "read it"
   ],
   "builtins": [
-    "AMAZON.YesIntent", "AMAZON.NextIntent", "AMAZON.ResumeIntent", "AMAZON.StopIntent", "AMAZON.CancelIntent",
+    "AMAZON.YesIntent", "AMAZON.NoIntent", "AMAZON.NextIntent", "AMAZON.ResumeIntent", "AMAZON.StopIntent", "AMAZON.CancelIntent",
     "AMAZON.HelpIntent", "AMAZON.FallbackIntent", "AMAZON.NavigateHomeIntent"
   ]
 }

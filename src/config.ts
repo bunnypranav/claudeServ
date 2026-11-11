@@ -5,6 +5,9 @@ export type Model = 'haiku' | 'sonnet' | 'opus';
 
 export const MODELS: readonly Model[] = ['haiku', 'sonnet', 'opus'];
 
+/** "use sonnet", "switch to opus": answered by the relay itself, on every client */
+export const MODEL_COMMAND = /^\s*(?:please\s+)?(?:use|switch to|change to)\s+(haiku|sonnet|opus)\b[\s.!]*$/i;
+
 /**
  * One kind of client. Each has its own token, system prompt and working
  * directory; the working directory decides where Claude Code keeps the
@@ -25,6 +28,18 @@ export interface AlexaConfig {
   skillId: string;
   /** amzn1.ask.account.… ids allowed to use the skill; empty means nobody yet (enrollment) */
   userIds: string[];
+  /** prompt, work directory and idle time of Alexa chats; its empty token is never offered to the guard */
+  profile: Profile;
+  /** model of a new Alexa chat */
+  model: Model;
+  /** the response must leave this long after the request arrived (Alexa gives up at about 8 s) */
+  deadlineMs: number;
+  /** say "One moment" if no text has arrived by then */
+  progressiveAfterMs: number;
+  /** most characters spoken in one response before "say continue" */
+  chunkChars: number;
+  /** how long an unheard answer can be picked up from a new session */
+  pickupMs: number;
 }
 
 export interface Config {
@@ -99,8 +114,29 @@ export function loadConfig(): Config {
   }
 
   const skillId = process.env.ALEXA_SKILL_ID ?? '';
+  const alexaModel = env('ALEXA_MODEL', 'haiku') as Model;
+  if (!MODELS.includes(alexaModel)) {
+    console.error(`ALEXA_MODEL must be one of ${MODELS.join(', ')}`);
+    process.exit(1);
+  }
   const alexa: AlexaConfig | null = skillId
-    ? { skillId, userIds: (process.env.ALEXA_USER_IDS ?? '').split(',').map((s) => s.trim()).filter(Boolean) }
+    ? {
+        skillId,
+        userIds: (process.env.ALEXA_USER_IDS ?? '').split(',').map((s) => s.trim()).filter(Boolean),
+        profile: {
+          name: 'alexa',
+          token: '',
+          promptFile: env('ALEXA_PROMPT_FILE', join(here, 'alexa.md')),
+          workDir: env('ALEXA_WORKDIR', '/srv/claudeserv/work-alexa'),
+          // sessions are short; the answer text outlives the process, so pickup still works
+          idleMs: Number(env('ALEXA_IDLE_MINUTES', '3')) * 60_000,
+        },
+        model: alexaModel,
+        deadlineMs: Number(env('ALEXA_DEADLINE_MS', '6500')),
+        progressiveAfterMs: Number(env('ALEXA_PROGRESSIVE_AFTER_MS', '2000')),
+        chunkChars: Number(env('ALEXA_CHUNK_CHARS', '900')),
+        pickupMs: Number(env('ALEXA_PICKUP_MINUTES', '10')) * 60_000,
+      }
     : null;
 
   return {

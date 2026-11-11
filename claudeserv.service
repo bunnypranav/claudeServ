@@ -1,5 +1,5 @@
 [Unit]
-Description=claudeserv (watch and car apps <-> Claude Code CLI)
+Description=claudeserv (watch, car and Alexa clients <-> Claude Code CLI)
 After=network-online.target
 Wants=network-online.target
 

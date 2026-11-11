@@ -109,6 +109,17 @@ How it behaves (`src/alexa/handler.ts`):
   (`src/alexa/verify.ts`), the skill ID, the account allowlist and the shared
   hourly cap. Logs hold request types and timings, never the words.
 
+Measured on 2026-11-11, and known limits:
+
+- Alexa to relay and back adds 0.1 to 0.6 s, so a 6500 ms deadline leaves over
+  a second under Alexa's 8 s limit. No response in the test runs left later.
+- Haiku answers a plain question in 1 to 2 s. A web search takes 15 to 20 s, so
+  it always needs one "continue". A long answer can take about 6 s to start.
+- "Ask my cloud about / for / if ..." lands in Fallback: Alexa drops the
+  connecting word and nothing is left to act as the carrier. "Ask my cloud
+  what ...", "... to write ..." and "... tell me about ..." work.
+- If the Echo is moved to Alexa+, run the voice tests again.
+
 Test through Alexa's cloud, without talking:
 
 ```

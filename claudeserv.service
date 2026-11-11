@@ -1,17 +1,17 @@
 [Unit]
-Description=ClaudeWatch relay (watch and car apps <-> Claude Code CLI)
+Description=claudeserv (watch and car apps <-> Claude Code CLI)
 After=network-online.target
 Wants=network-online.target
 
 [Service]
 Type=simple
-User=claudewatch
-Group=claudewatch
-WorkingDirectory=/srv/claudewatch/relay
+User=claudeserv
+Group=claudeserv
+WorkingDirectory=/srv/claudeserv/claudeServ
 # RELAY_TOKEN (watch), RELAY_TOKEN_CAR (car) and any overrides (DEFAULT_MODEL, MAX_LIVE, IDLE_MINUTES, ...)
-EnvironmentFile=/srv/claudewatch/relay.env
-Environment=HOME=/srv/claudewatch
-Environment=PATH=/srv/claudewatch/.local/bin:/usr/local/bin:/usr/bin:/bin
+EnvironmentFile=/srv/claudeserv/claudeserv.env
+Environment=HOME=/srv/claudeserv
+Environment=PATH=/srv/claudeserv/.local/bin:/usr/local/bin:/usr/bin:/bin
 ExecStart=/usr/bin/node src/server.ts
 Restart=always
 RestartSec=3

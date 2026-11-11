@@ -1,9 +1,9 @@
 {
-  "name": "claudewatch-relay",
+  "name": "claudeserv",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "WebSocket relay between the ClaudeWatch Wear OS app and the official Claude Code CLI",
+  "description": "Relay between small Claude clients (Wear OS watch, car) and the official Claude Code CLI",
   "engines": {
     "node": ">=24"
   },

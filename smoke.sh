@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # Phase 0 check: one headless turn on the Pro login, with the watch prompt and
 # web search, reporting time to first text and total time.
-# Usage (as claudewatch): ~/relay/smoke.sh "what's the weather in Hyderabad today?"
+# Usage (as claudeserv): ~/claudeServ/smoke.sh "what's the weather in Hyderabad today?"
 set -euo pipefail
-cd /srv/claudewatch/work
+cd /srv/claudeserv/work
 prompt="${1:-In one sentence, what are you?}"
 start=$(date +%s%3N)
 first=""
 claude -p "$prompt" \
-  --system-prompt-file /srv/claudewatch/relay/watch.md \
+  --system-prompt-file /srv/claudeserv/claudeServ/watch.md \
   --tools "WebSearch" --allowedTools "WebSearch" --disallowedTools "WebFetch" \
   --strict-mcp-config --setting-sources "" --model sonnet \
   --no-session-persistence \

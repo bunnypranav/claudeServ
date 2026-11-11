@@ -68,7 +68,7 @@ export function loadConfig(): Config {
       name: 'watch',
       token: token('RELAY_TOKEN', true)!,
       promptFile: env('CLAUDE_PROMPT_FILE', join(here, 'watch.md')),
-      workDir: env('CLAUDE_WORKDIR', '/srv/claudewatch/work'),
+      workDir: env('CLAUDE_WORKDIR', '/srv/claudeserv/work'),
       idleMs: idleMinutes * 60_000,
     },
   ];
@@ -78,7 +78,7 @@ export function loadConfig(): Config {
       name: 'car',
       token: car,
       promptFile: env('CAR_PROMPT_FILE', join(here, 'car.md')),
-      workDir: env('CAR_WORKDIR', '/srv/claudewatch/work-car'),
+      workDir: env('CAR_WORKDIR', '/srv/claudeserv/work-car'),
       // drives come in bursts; free the memory sooner
       idleMs: Number(env('CAR_IDLE_MINUTES', '5')) * 60_000,
     });

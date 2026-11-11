@@ -193,7 +193,7 @@ function onConnection(ws: WebSocket, req: IncomingMessage, profile: Profile): vo
 
 server.listen(cfg.port, cfg.host, () => {
   const clients = cfg.profiles.map((p) => p.name).join(', ');
-  log(null, `claudewatch-relay listening on ${cfg.host}:${cfg.port} (clients ${clients}, default model ${cfg.defaultModel}, max ${cfg.maxLive} live)`);
+  log(null, `claudeserv listening on ${cfg.host}:${cfg.port} (clients ${clients}, default model ${cfg.defaultModel}, max ${cfg.maxLive} live)`);
 });
 
 for (const sig of ['SIGTERM', 'SIGINT'] as const) {

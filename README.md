@@ -3,7 +3,8 @@
 A small relay that lets thin clients (the Wear OS watch app, the car app, and
 soon an Alexa skill) talk to Claude through the official Claude Code CLI,
 signed in with a Claude Pro account. It runs on Hack Club Nest as the systemd
-service `claudeserv` and is published through a Cloudflare tunnel.
+service `claudeserv` and is published at `claude.bunnyorg.in` through the
+Cloudflare tunnel `nest` (`claude.bunnyorg.in` -> `http://localhost:8787`).
 
 Each chat is one long-lived `claude -p` process speaking stream-json. Clients
 connect over a WebSocket at `/ws` with `Authorization: Bearer <token>`; the

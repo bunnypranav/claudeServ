@@ -1,0 +1,24 @@
+[Unit]
+Description=ClaudeWatch relay (watch and car apps <-> Claude Code CLI)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=claudewatch
+Group=claudewatch
+WorkingDirectory=/srv/claudewatch/relay
+# RELAY_TOKEN (watch), RELAY_TOKEN_CAR (car) and any overrides (DEFAULT_MODEL, MAX_LIVE, IDLE_MINUTES, ...)
+EnvironmentFile=/srv/claudewatch/relay.env
+Environment=HOME=/srv/claudewatch
+Environment=PATH=/srv/claudewatch/.local/bin:/usr/local/bin:/usr/bin:/bin
+ExecStart=/usr/bin/node src/server.ts
+Restart=always
+RestartSec=3
+# Nest has 2 GB for everything; two claude processes plus node fit well under this.
+MemoryMax=1200M
+KillMode=mixed
+TimeoutStopSec=10
+
+[Install]
+WantedBy=multi-user.target

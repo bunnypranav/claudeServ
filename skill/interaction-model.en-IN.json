@@ -1,7 +1,7 @@
 {
   "interactionModel": {
     "languageModel": {
-      "invocationName": "my claude",
+      "invocationName": "my cloud",
       "modelConfiguration": {
         "fallbackIntentSensitivity": {
           "level": "HIGH"

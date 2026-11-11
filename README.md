@@ -63,7 +63,7 @@ drop and resume). `smoke.sh` runs one headless turn on Nest and reports timings.
 
 ## Alexa skill
 
-The custom skill "My Claude" (invocation name "my claude", locale `en-IN`) stays
+The custom skill "My Claude" (invocation name "my cloud", locale `en-IN`) stays
 in the Development stage and is never published. Its manifest is
 `skill/skill.json`; the endpoint is `https://claude.bunnyorg.in/alexa` with the
 wildcard certificate type (the Cloudflare edge cert covers `*.bunnyorg.in`).

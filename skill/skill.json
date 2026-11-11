@@ -8,8 +8,8 @@
           "summary": "Ask Claude a question by voice.",
           "description": "A personal skill that passes spoken questions to Claude through a private relay. Development stage only; not published.",
           "examplePhrases": [
-            "Alexa, open my claude",
-            "Alexa, ask my claude why the sky is blue",
+            "Alexa, open my cloud",
+            "Alexa, ask my cloud why the sky is blue",
             "continue"
           ],
           "keywords": []

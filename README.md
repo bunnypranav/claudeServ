@@ -58,3 +58,18 @@ RELAY_TOKEN=... node client.mjs --url wss://<host>/ws "ask:what is 2+2" "ask:and
 `client.mjs` has no dependencies; see its header for the other steps (cancel,
 drop and resume). `smoke.sh` runs one headless turn on Nest and reports timings.
 `npm run check` type-checks the sources (Node runs the `.ts` files directly).
+
+## Alexa skill
+
+The custom skill "My Claude" (invocation name "my claude", locale `en-IN`) stays
+in the Development stage and is never published. Its manifest is
+`skill/skill.json`; the endpoint is `https://claude.bunnyorg.in/alexa` with the
+wildcard certificate type (the Cloudflare edge cert covers `*.bunnyorg.in`).
+
+Skill ID: `amzn1.ask.skill.f938a639-6ee2-4f52-99dd-790466416012`
+
+Update the manifest with the ASK CLI (`npm i -g ask-cli`, `ask configure`):
+
+```
+ask smapi update-skill-manifest --skill-id <id> --stage development --manifest file:skill/skill.json
+```

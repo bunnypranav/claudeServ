@@ -1,0 +1,32 @@
+{
+  "manifest": {
+    "manifestVersion": "1.0",
+    "publishingInformation": {
+      "locales": {
+        "en-IN": {
+          "name": "My Claude",
+          "summary": "Ask Claude a question by voice.",
+          "description": "A personal skill that passes spoken questions to Claude through a private relay. Development stage only; not published.",
+          "examplePhrases": [
+            "Alexa, open my claude",
+            "Alexa, ask my claude why the sky is blue",
+            "continue"
+          ],
+          "keywords": []
+        }
+      },
+      "isAvailableWorldwide": false,
+      "distributionCountries": ["IN"],
+      "category": "KNOWLEDGE_AND_TRIVIA",
+      "testingInstructions": "Personal skill, never submitted for certification."
+    },
+    "apis": {
+      "custom": {
+        "endpoint": {
+          "uri": "https://claude.bunnyorg.in/alexa",
+          "sslCertificateType": "Wildcard"
+        }
+      }
+    }
+  }
+}

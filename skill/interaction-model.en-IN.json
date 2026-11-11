@@ -2,6 +2,11 @@
   "interactionModel": {
     "languageModel": {
       "invocationName": "my claude",
+      "modelConfiguration": {
+        "fallbackIntentSensitivity": {
+          "level": "HIGH"
+        }
+      },
       "intents": [
         {
           "name": "Q_what",
@@ -577,6 +582,54 @@
           ],
           "samples": [
             "switch {query}"
+          ]
+        },
+        {
+          "name": "Q_about",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "about {query}"
+          ]
+        },
+        {
+          "name": "Q_for",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "for {query}"
+          ]
+        },
+        {
+          "name": "Q_if",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "if {query}"
+          ]
+        },
+        {
+          "name": "Q_whether",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "whether {query}"
           ]
         },
         {

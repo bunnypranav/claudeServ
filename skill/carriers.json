@@ -5,7 +5,8 @@
     "what", "what's", "who", "who's", "whom", "whose", "why", "how", "how's", "when", "where", "which",
     "is", "are", "was", "were", "can", "could", "do", "does", "did", "should", "would", "will", "has", "have",
     "tell me", "tell", "explain", "define", "describe", "summarize", "translate", "compare", "calculate", "convert",
-    "write", "give me", "give", "list", "find", "suggest", "recommend", "search", "name", "help", "use", "switch"
+    "write", "give me", "give", "list", "find", "suggest", "recommend", "search", "name", "help", "use", "switch",
+    "about", "for", "if", "whether"
   ],
   "plain": [
     "ask", "question", "I want to know", "I have a question", "please", "okay", "so", "and", "also"

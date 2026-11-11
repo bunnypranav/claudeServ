@@ -27,7 +27,9 @@ export function build(c = src) {
   intents.push({ name: 'Q_plain', slots: slot, samples: c.plain.map((p) => `${p} {query}`) });
   intents.push({ name: 'ContinueIntent', slots: [], samples: c.continue });
   for (const name of c.builtins) intents.push({ name, samples: [] });
-  const model = { interactionModel: { languageModel: { invocationName: c.invocationName, intents, types: [] } } };
+  // HIGH: words that fit no carrier go to AMAZON.FallbackIntent rather than the nearest short sample
+  const modelConfiguration = { fallbackIntentSensitivity: { level: 'HIGH' } };
+  const model = { interactionModel: { languageModel: { invocationName: c.invocationName, modelConfiguration, intents, types: [] } } };
   return { model, prefixes };
 }
 

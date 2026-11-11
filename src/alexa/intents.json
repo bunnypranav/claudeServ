@@ -47,5 +47,9 @@
   "Q_help": "help",
   "Q_use": "use",
   "Q_switch": "switch",
+  "Q_about": "about",
+  "Q_for": "for",
+  "Q_if": "if",
+  "Q_whether": "whether",
   "Q_plain": ""
 }

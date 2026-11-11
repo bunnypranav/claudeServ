@@ -4,6 +4,8 @@ import { WebSocketServer, type WebSocket } from 'ws';
 import { ChatPool, log, type Chat, type ChatEvent } from './chat.ts';
 import { loadConfig, MODELS, type Model, type Profile } from './config.ts';
 import { Guard } from './guard.ts';
+import { AlexaHandler } from './alexa/handler.ts';
+import { AlexaVerifier } from './alexa/verify.ts';
 
 /*
  * Protocol (JSON text frames on /ws, authenticated with "Authorization: Bearer <token>" only; see guard.ts).
@@ -47,8 +49,78 @@ function authStatus(): Promise<{ loggedIn: boolean; method: string }> {
   });
 }
 
+/*
+ * POST /alexa: the Alexa skill's endpoint. Alexa can't send a bearer token, so
+ * the request is trusted only after its Amazon signature checks out (alexa/verify.ts);
+ * failures get an empty 400 and don't feed the IP lockout, since Amazon's
+ * sending addresses are shared.
+ */
+const ALEXA_BODY_LIMIT = 64 * 1024;
+const ALEXA_BAD_PER_MINUTE = 30;
+const alexaVerifier = new AlexaVerifier();
+const alexaHandler = cfg.alexa ? new AlexaHandler(cfg.alexa, (m) => log(null, m)) : null;
+/** unverified requests per IP in the current minute; past the limit they are dropped unread */
+const alexaBad = new Map<string, { count: number; since: number }>();
+
+function readBody(req: IncomingMessage, limit: number): Promise<Buffer | null> {
+  return new Promise((resolve) => {
+    const chunks: Buffer[] = [];
+    let size = 0;
+    req.on('data', (c: Buffer) => {
+      size += c.length;
+      if (size > limit) {
+        resolve(null);
+        req.destroy();
+      } else chunks.push(c);
+    });
+    req.on('end', () => resolve(Buffer.concat(chunks)));
+    req.on('error', () => resolve(null));
+  });
+}
+
+async function onAlexa(req: IncomingMessage, res: ServerResponse): Promise<void> {
+  const received = Date.now();
+  const refuse = () => {
+    res.writeHead(400, { 'cache-control': 'no-store' });
+    res.end();
+  };
+  const ip = Guard.clientIp(req);
+  let bad = alexaBad.get(ip);
+  if (bad && received - bad.since > 60_000) {
+    alexaBad.delete(ip);
+    bad = undefined;
+  }
+  if (bad && bad.count >= ALEXA_BAD_PER_MINUTE) return refuse();
+  const header = (name: string) => {
+    const v = req.headers[name];
+    return Array.isArray(v) ? v[0] : v;
+  };
+  try {
+    if (!(header('content-type') ?? '').toLowerCase().startsWith('application/json')) throw new Error('not JSON');
+    const raw = await readBody(req, ALEXA_BODY_LIMIT);
+    if (!raw) throw new Error('body too large');
+    const body = await alexaVerifier.verify({ certUrl: header('signaturecertchainurl'), signature: header('signature-256'), body: raw });
+    const reply = alexaHandler!.handle(body, received);
+    if (reply.status !== 200) return refuse();
+    json(res, 200, reply.body!);
+  } catch (err) {
+    if (bad) bad.count++;
+    else alexaBad.set(ip, { count: 1, since: received });
+    log(null, `ALEXA: rejected request from ${ip}: ${(err as Error).message}`);
+    refuse();
+  }
+}
+setInterval(() => {
+  const now = Date.now();
+  for (const [ip, b] of alexaBad) if (now - b.since > 60_000) alexaBad.delete(ip);
+}, 10 * 60_000).unref();
+
 const server = createServer(async (req, res) => {
   const url = new URL(req.url ?? '/', 'http://relay');
+  if (alexaHandler && req.method === 'POST' && url.pathname === '/alexa') {
+    await onAlexa(req, res);
+    return;
+  }
   if (req.method === 'GET' && url.pathname === '/health') {
     // Anyone may learn the relay is up; only a token holder gets the details.
     const profile = guard.blocked(Guard.clientIp(req)) ? null : guard.check(req);
@@ -193,7 +265,7 @@ function onConnection(ws: WebSocket, req: IncomingMessage, profile: Profile): vo
 
 server.listen(cfg.port, cfg.host, () => {
   const clients = cfg.profiles.map((p) => p.name).join(', ');
-  log(null, `claudeserv listening on ${cfg.host}:${cfg.port} (clients ${clients}, default model ${cfg.defaultModel}, max ${cfg.maxLive} live)`);
+  log(null, `claudeserv listening on ${cfg.host}:${cfg.port} (clients ${clients}${cfg.alexa ? ', alexa' : ''}, default model ${cfg.defaultModel}, max ${cfg.maxLive} live)`);
 });
 
 for (const sig of ['SIGTERM', 'SIGINT'] as const) {

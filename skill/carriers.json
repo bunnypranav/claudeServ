@@ -1,0 +1,20 @@
+{
+  "invocationName": "my claude",
+  "locale": "en-IN",
+  "carriers": [
+    "what", "what's", "who", "who's", "whom", "whose", "why", "how", "how's", "when", "where", "which",
+    "is", "are", "was", "were", "can", "could", "do", "does", "did", "should", "would", "will", "has", "have",
+    "tell me", "tell", "explain", "define", "describe", "summarize", "translate", "compare", "calculate", "convert",
+    "write", "give me", "give", "list", "find", "suggest", "recommend", "search", "name", "help", "use", "switch"
+  ],
+  "plain": [
+    "ask", "question", "I want to know", "I have a question", "please", "okay", "so", "and", "also"
+  ],
+  "continue": [
+    "continue", "go on", "keep going", "more", "tell me more", "carry on", "what's the answer", "are you done", "read it"
+  ],
+  "builtins": [
+    "AMAZON.YesIntent", "AMAZON.NextIntent", "AMAZON.ResumeIntent", "AMAZON.StopIntent", "AMAZON.CancelIntent",
+    "AMAZON.HelpIntent", "AMAZON.FallbackIntent", "AMAZON.NavigateHomeIntent"
+  ]
+}

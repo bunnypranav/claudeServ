@@ -1,0 +1,653 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "my claude",
+      "intents": [
+        {
+          "name": "Q_what",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "what {query}"
+          ]
+        },
+        {
+          "name": "Q_whats",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "what's {query}"
+          ]
+        },
+        {
+          "name": "Q_who",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "who {query}"
+          ]
+        },
+        {
+          "name": "Q_whos",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "who's {query}"
+          ]
+        },
+        {
+          "name": "Q_whom",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "whom {query}"
+          ]
+        },
+        {
+          "name": "Q_whose",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "whose {query}"
+          ]
+        },
+        {
+          "name": "Q_why",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "why {query}"
+          ]
+        },
+        {
+          "name": "Q_how",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "how {query}"
+          ]
+        },
+        {
+          "name": "Q_hows",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "how's {query}"
+          ]
+        },
+        {
+          "name": "Q_when",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "when {query}"
+          ]
+        },
+        {
+          "name": "Q_where",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "where {query}"
+          ]
+        },
+        {
+          "name": "Q_which",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "which {query}"
+          ]
+        },
+        {
+          "name": "Q_is",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "is {query}"
+          ]
+        },
+        {
+          "name": "Q_are",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "are {query}"
+          ]
+        },
+        {
+          "name": "Q_was",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "was {query}"
+          ]
+        },
+        {
+          "name": "Q_were",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "were {query}"
+          ]
+        },
+        {
+          "name": "Q_can",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "can {query}"
+          ]
+        },
+        {
+          "name": "Q_could",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "could {query}"
+          ]
+        },
+        {
+          "name": "Q_do",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "do {query}"
+          ]
+        },
+        {
+          "name": "Q_does",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "does {query}"
+          ]
+        },
+        {
+          "name": "Q_did",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "did {query}"
+          ]
+        },
+        {
+          "name": "Q_should",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "should {query}"
+          ]
+        },
+        {
+          "name": "Q_would",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "would {query}"
+          ]
+        },
+        {
+          "name": "Q_will",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "will {query}"
+          ]
+        },
+        {
+          "name": "Q_has",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "has {query}"
+          ]
+        },
+        {
+          "name": "Q_have",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "have {query}"
+          ]
+        },
+        {
+          "name": "Q_tell_me",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "tell me {query}"
+          ]
+        },
+        {
+          "name": "Q_tell",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "tell {query}"
+          ]
+        },
+        {
+          "name": "Q_explain",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "explain {query}"
+          ]
+        },
+        {
+          "name": "Q_define",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "define {query}"
+          ]
+        },
+        {
+          "name": "Q_describe",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "describe {query}"
+          ]
+        },
+        {
+          "name": "Q_summarize",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "summarize {query}"
+          ]
+        },
+        {
+          "name": "Q_translate",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "translate {query}"
+          ]
+        },
+        {
+          "name": "Q_compare",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "compare {query}"
+          ]
+        },
+        {
+          "name": "Q_calculate",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "calculate {query}"
+          ]
+        },
+        {
+          "name": "Q_convert",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "convert {query}"
+          ]
+        },
+        {
+          "name": "Q_write",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "write {query}"
+          ]
+        },
+        {
+          "name": "Q_give_me",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "give me {query}"
+          ]
+        },
+        {
+          "name": "Q_give",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "give {query}"
+          ]
+        },
+        {
+          "name": "Q_list",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "list {query}"
+          ]
+        },
+        {
+          "name": "Q_find",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "find {query}"
+          ]
+        },
+        {
+          "name": "Q_suggest",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "suggest {query}"
+          ]
+        },
+        {
+          "name": "Q_recommend",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "recommend {query}"
+          ]
+        },
+        {
+          "name": "Q_search",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "search {query}"
+          ]
+        },
+        {
+          "name": "Q_name",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "name {query}"
+          ]
+        },
+        {
+          "name": "Q_help",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "help {query}"
+          ]
+        },
+        {
+          "name": "Q_use",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "use {query}"
+          ]
+        },
+        {
+          "name": "Q_switch",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "switch {query}"
+          ]
+        },
+        {
+          "name": "Q_plain",
+          "slots": [
+            {
+              "name": "query",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "ask {query}",
+            "question {query}",
+            "I want to know {query}",
+            "I have a question {query}",
+            "please {query}",
+            "okay {query}",
+            "so {query}",
+            "and {query}",
+            "also {query}"
+          ]
+        },
+        {
+          "name": "ContinueIntent",
+          "slots": [],
+          "samples": [
+            "continue",
+            "go on",
+            "keep going",
+            "more",
+            "tell me more",
+            "carry on",
+            "what's the answer",
+            "are you done",
+            "read it"
+          ]
+        },
+        {
+          "name": "AMAZON.YesIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.NextIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.ResumeIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.FallbackIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": []
+        }
+      ],
+      "types": []
+    }
+  }
+}

@@ -37,6 +37,8 @@ protocol is described at the top of `src/server.ts`, the protections in
 | `CLAUDE_BIN` | `~/.local/bin/claude` | Claude Code binary |
 | `CLAUDE_PROMPT_FILE` / `CAR_PROMPT_FILE` | `watch.md` / `car.md` | System prompts |
 | `CLAUDE_WORKDIR` / `CAR_WORKDIR` | `/srv/claudeserv/work` / `/srv/claudeserv/work-car` | Empty directories the chats run in |
+| `ALEXA_SKILL_ID` | unset | Enables `POST /alexa`; requests for any other skill get 400 |
+| `ALEXA_USER_IDS` | empty | Comma-separated `amzn1.ask.account.…` ids allowed to use the skill. While empty, the relay logs each caller's id once so it can be copied here |
 
 Generate a token with `openssl rand -hex 32`.
 

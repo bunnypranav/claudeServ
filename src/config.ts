@@ -19,8 +19,18 @@ export interface Profile {
   idleMs: number;
 }
 
+/** The Alexa skill's route; it has no bearer token, so it is guarded by Amazon's request signature and these ids. */
+export interface AlexaConfig {
+  /** amzn1.ask.skill.…; requests for any other skill are refused */
+  skillId: string;
+  /** amzn1.ask.account.… ids allowed to use the skill; empty means nobody yet (enrollment) */
+  userIds: string[];
+}
+
 export interface Config {
   profiles: Profile[];
+  /** null unless ALEXA_SKILL_ID is set */
+  alexa: AlexaConfig | null;
   host: string;
   port: number;
   claudeBin: string;
@@ -88,8 +98,14 @@ export function loadConfig(): Config {
     process.exit(1);
   }
 
+  const skillId = process.env.ALEXA_SKILL_ID ?? '';
+  const alexa: AlexaConfig | null = skillId
+    ? { skillId, userIds: (process.env.ALEXA_USER_IDS ?? '').split(',').map((s) => s.trim()).filter(Boolean) }
+    : null;
+
   return {
     profiles,
+    alexa,
     host: env('RELAY_HOST', '127.0.0.1'),
     port: Number(env('RELAY_PORT', '8787')),
     claudeBin: env('CLAUDE_BIN', join(homedir(), '.local/bin/claude')),

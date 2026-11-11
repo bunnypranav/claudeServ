@@ -9,7 +9,9 @@
   },
   "scripts": {
     "start": "node src/server.ts",
-    "check": "tsc --noEmit"
+    "check": "tsc --noEmit",
+    "test": "node --test test/*.test.ts",
+    "model": "node skill/build-model.mjs"
   },
   "dependencies": {
     "ws": "^8.18.0"

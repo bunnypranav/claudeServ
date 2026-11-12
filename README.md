@@ -46,7 +46,7 @@ protocol is described at the top of `src/server.ts`, the protections in
 | `ALEXA_DEADLINE_MS` | `6500` | The response leaves this long after the request arrived (Alexa gives up at about 8 s) |
 | `ALEXA_PROGRESSIVE_AFTER_MS` | `2000` | Say "One moment" if no text has arrived by then |
 | `ALEXA_CHUNK_CHARS` | `900` | Most characters spoken in one response before "say continue" |
-| `ALEXA_PICKUP_MINUTES` | `10` | How long an unheard answer can be picked up with "ask my cloud to continue" |
+| `ALEXA_PICKUP_MINUTES` | `10` | How long an unheard answer can be picked up with "ask my robot to continue" |
 
 Generate a token with `openssl rand -hex 32`.
 
@@ -71,7 +71,7 @@ drop and resume). `smoke.sh` runs one headless turn on Nest and reports timings.
 
 ## Alexa skill
 
-The custom skill "My Claude" (invocation name "my cloud", locale `en-IN`) stays
+The custom skill "My Claude" (invocation name "my robot", locale `en-IN`) stays
 in the Development stage and is never published. Its manifest is
 `skill/skill.json`; the endpoint is `https://claude.bunnyorg.in/alexa` with the
 wildcard certificate type (the Cloudflare edge cert covers `*.bunnyorg.in`).
@@ -103,7 +103,7 @@ How it behaves (`src/alexa/handler.ts`):
   is spoken; otherwise Alexa speaks the complete sentences so far (or "Still
   searching") and the user says "continue" for the rest. The turn keeps running
   in between. Long answers are read `ALEXA_CHUNK_CHARS` at a time.
-- If the session times out before the answer was heard, "Alexa, ask my cloud
+- If the session times out before the answer was heard, "Alexa, ask my robot
   to continue" picks it up for `ALEXA_PICKUP_MINUTES`.
 - `/alexa` has no bearer token. It is guarded by Amazon's request signature
   (`src/alexa/verify.ts`), the skill ID, the account allowlist and the shared
@@ -115,8 +115,8 @@ Measured on 2026-11-11, and known limits:
   a second under Alexa's 8 s limit. No response in the test runs left later.
 - Haiku answers a plain question in 1 to 2 s. A web search takes 15 to 20 s, so
   it always needs one "continue". A long answer can take about 6 s to start.
-- "Ask my cloud about / for / if ..." lands in Fallback: Alexa drops the
-  connecting word and nothing is left to act as the carrier. "Ask my cloud
+- "Ask my robot about / for / if ..." lands in Fallback: Alexa drops the
+  connecting word and nothing is left to act as the carrier. "Ask my robot
   what ...", "... to write ..." and "... tell me about ..." work.
 - If the Echo is moved to Alexa+, run the voice tests again.
 
@@ -124,6 +124,6 @@ Test through Alexa's cloud, without talking:
 
 ```
 node skill/try.mjs nlu                      # which intent each carrier resolves to
-node skill/try.mjs say "open my cloud" "why is the sky blue" continue stop
+node skill/try.mjs say "open my robot" "why is the sky blue" continue stop
 npm test                                    # unit tests, no network
 ```

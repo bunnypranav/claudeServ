@@ -3,7 +3,7 @@
 //
 //   node skill/try.mjs nlu                     which intent every carrier and Continue phrase resolves to
 //   node skill/try.mjs nlu "tell me more"      the same for the given utterances
-//   node skill/try.mjs say "open my cloud" "why is the sky blue" stop
+//   node skill/try.mjs say "open my robot" "why is the sky blue" stop
 //                                              a real conversation: signed requests to the live relay
 //
 // `say` starts a new session with the first utterance and continues it with the rest.
